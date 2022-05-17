@@ -29,8 +29,8 @@
       "use strict";
 
       const userNum = +prompt("Введите положительное целое число:");
-      const numHundred = Math.trunc(userNum / 100);
-      const numTen = Math.trunc(userNum / 10);
+      const numHundred = Math.trunc(userNum / 100) % 10;
+      const numTen = Math.trunc(userNum / 10) % 10;
       const numUnit = userNum % 10;
 
       alert(
