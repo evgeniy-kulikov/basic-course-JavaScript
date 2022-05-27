@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework 4.1</title>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для продукта.
+Названия: `ProductES5` для es5 стиля, `ProductES6` для es6 стиля.
+При создании объекта от функции-конструктора/класса необходимо передавать имя
+и цену товара, эта информация должна быть сохранена в объекте.
+Также у объекта должна быть возможность выполнить метод `make25Discount`, данный
+метод должен уменьшать стоимость продукта на 25%.
+Необходимо продемонстрировать работу с объектом (в свободной форме).
+-->
+    <script>
+      "use strict";
+
+      // *  *  *  *  *  es5 стиль  *  *  *  *  *
+
+      // функция-конструктор для класса ProductES5.
+      function ProductES5(productName, productPrice) {
+        // атрибуты класса ProductES5
+        this.productName = productName;
+        this.productPrice = productPrice;
+      }
+
+      // Метод класса ProductES5 (уменьшение стоимости продукта на 25%)
+      ProductES5.prototype.make25Discount = function () {
+        this.productPrice *= 0.75;
+      };
+
+      const es5ProductСlothes = new ProductES5("Куртка ветровка", 3000);
+      console.log(
+        `Наименование: ${es5ProductСlothes.productName}, цена: ${es5ProductСlothes.productPrice} руб.`
+      );
+      es5ProductСlothes.make25Discount();
+      console.log(
+        `Наименование: ${es5ProductСlothes.productName}, новая цена: ${es5ProductСlothes.productPrice} руб.`
+      );
+
+      // *  *  *  *  *  es6 стиль  *  *  *  *  *
+
+      class ProductES6 {
+        constructor(name, price) {
+          // атрибуты класса ProductES6
+          this.name = name;
+          this.price = price;
+        }
+        // Метод класса ProductES6 (уменьшение стоимости продукта на 25%)
+        make25Discount() {
+          this.price *= 0.75;
+        }
+      }
+
+      const es6ProductShoes = new ProductES6("Кроссовки", 5500);
+      console.log(
+        `Наименование: ${es6ProductShoes.name}, цена: ${es6ProductShoes.price} руб.`
+      );
+      es6ProductShoes.make25Discount(); // уменьшение стоимости продукта
+      console.log(
+        `Наименование: ${es6ProductShoes.name}, новая цена: ${es6ProductShoes.price} руб.`
+      );
+    </script>
+  </body>
+</html>

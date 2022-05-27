@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework 4.2</title>
+  </head>
+  <body>
+    <!--
+Обязательное задание.
+
+Необходимо данное задание выполнить в es5 стиле и в es6 стиле.
+Необходимо создать функцию-конструктор/класс для поста в социальной сети.
+Названия: `PostES5` для es5 стиля и `PostES6` для es6 стиля.
+Пост должен хранить:
+1. Автора поста (имени достаточно).
+2. Текст поста.
+3. Дату и время последнего изменения поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Каждому экземпляру объекта должен быть доступен метод `edit`, который будет
+менять текст поста.
+
+---
+
+Необходимо создать функцию-конструктор/класс для закрепленного поста в
+социальной сети.
+Названия: `AttachedPostES5` для es5 стиля и `AttachedPostES6` для es6 стиля.
+Закрепленный пост должен наследоваться от обычного поста.
+Данные автора поста и текст поста необходимо передавать при создании
+экземпляра объекта.
+Закрепленный пост должен иметь свойство `highlighted`, в котором по умолчанию
+будет лежать значение false (это свойство будет обозначать, будет ли наш
+закрепленный пост подсвечен).
+У экземпляров объекта закрепленного поста должен быть метод с названием
+`makeTextHighlighted`, который сделает так, чтобы наш пост стал подсвеченным
+(будет менять свойство `highlighted`).
+
+---
+
+Подсказки:
+1. Задание сложное, советую делать по аналогии с примером на онлайн-занятии.
+2. Обратите внимание что пост хранит "дату и время последнего изменения
+поста", это значит что если пост кто-то изменит (например вызовет какой-то
+метод, который изменит что-то в посте), дата и время последнего изменения
+поста также должна измениться.
+3. Выполняйте все по порядку, не стоит пытаться сделать все сразу, иначе можно
+что-нибудь пропустить.
+4. Если непонятно условие - задайте вопрос.
+-->
+    <script>
+      "use strict";
+
+      // *  *  *  *  *  *  *   es5 стиль   *  *  *  *  *  *  *  *
+
+      // функция-конструктор для поста в социальной сети.
+      function PostES5(name, message, timeStamp) {
+        this.name = name;
+        this.message = message;
+        this.timeStamp = new Date().toLocaleString();
+      }
+
+      // Метод изменения текста сообщения
+      PostES5.prototype.edit = function (message) {
+        this.message = message;
+        this.timeStamp = new Date().toLocaleString();
+      };
+
+      const firstPostES5 = new PostES5("Анатолий", "Первое сообщение");
+      console.log(
+        `Имя: ${firstPostES5.name}, сообщение: '${firstPostES5.message}',
+        время: ${firstPostES5.timeStamp}`
+      );
+
+      firstPostES5.edit("Измененное сообщение"); // изменяем сообщение
+
+      console.log(
+        `Имя: ${firstPostES5.name}, сообщение: '${firstPostES5.message}',
+        время: ${firstPostES5.timeStamp}`
+      );
+
+      // // Проверка верности срабатывания времени.
+      // setTimeout(() => {
+      //   firstPostES5.edit("Второе измененное сообщение");
+      //   console.log(
+      //     `Имя: ${firstPostES5.name}, сообщение: '${firstPostES5.message}',
+      // время: ${firstPostES5.timeStamp}`
+      //   );
+      // }, 1000);
+
+      // функция-конструктор для закрепленного поста в социальной сети.
+      // Наследник от PostES5
+      function AttachedPostES5(name, message, highlighted) {
+        PostES5.call(this, name, message);
+        this.highlighted = false;
+      }
+
+      // Наследуем дерево прототипов свойств и методов от PostES5
+      AttachedPostES5.prototype = Object.create(PostES5.prototype);
+      // Добавляем constructor от наследника AttachedPostES5
+      AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+      // Метод изменения свойства highlighted (флаг подсветки)
+      AttachedPostES5.prototype.makeTextHighlighted = function (arg) {
+        this.highlighted = true;
+        this.timeStamp = new Date().toLocaleString();
+      };
+
+      const AttachPostES5 = new AttachedPostES5(
+        "Анатолий",
+        "Выделенное сообщение"
+      );
+      console.log(
+        `Имя: ${AttachPostES5.name}, сообщение: '${AttachPostES5.message}',
+        время: ${AttachPostES5.timeStamp}, подсветка: ${AttachPostES5.highlighted}`
+      );
+
+      AttachPostES5.edit("Текст теперь подсвечен");
+      AttachPostES5.makeTextHighlighted(); // Изменяем флаг подсветки
+
+      console.log(
+        `Имя: ${AttachPostES5.name}, сообщение: '${AttachPostES5.message}',
+        время: ${AttachPostES5.timeStamp}, подсветка: ${AttachPostES5.highlighted}`
+      );
+
+      // Просмотр дерева прототипов обектов
+      console.log(firstPostES5);
+      console.log(AttachPostES5);
+
+      // *  *  *  *  *  *  *   es6 стиль   *  *  *  *  *  *  *  *
+      // Создание базового класса для поста в социальной сети
+      class PostES6 {
+        // свойства класса: Имя, текст сообщения + время создания сообщения.
+        constructor(person, text) {
+          this.person = person;
+          this.text = text;
+          this.timeStamp = new Date().toLocaleString();
+        }
+        // метод класса для создания нового текста сообщения
+        edit(text) {
+          this.text = text;
+          this.timeStamp = new Date().toLocaleString();
+        }
+      }
+
+      const firstPostES6 = new PostES6("Иннокентий", "Первое сообщение");
+      console.log(
+        `Имя: ${firstPostES6.person}, сообщение: '${firstPostES6.text}',
+        время: ${firstPostES6.timeStamp}`
+      );
+      firstPostES6.edit("Измененное сообщение");
+      console.log(
+        `Имя: ${firstPostES6.person}, сообщение: '${firstPostES6.text}',
+        время: ${firstPostES6.timeStamp}`
+      );
+
+      // Наследуемся от базового класса PostES6, для создания класса "Закрепленного поста"
+      class AttachedPostES6 extends PostES6 {
+        // Для создания свойств (person, text) по умолчанию
+        // будет используется конструктор базового класса
+        // Установка значение статуса подсветки по умолчанию (дополнительное свойство)
+        highlighted = false;
+        // дополнительный метод изменения статуса подсветки
+        makeTextHighlighted() {
+          this.highlighted = true;
+          // Т.к. статус изменяется, то обновляем дату поста
+          this.timeStamp = new Date().toLocaleString();
+        }
+      }
+
+      const AttachPostES6 = new AttachedPostES6(
+        "Иннокентий",
+        "Выделенное сообщение"
+      );
+
+      console.log(
+        `Имя: ${AttachPostES6.person}, сообщение: '${AttachPostES6.text}',
+  время: ${AttachPostES6.timeStamp}, подсветка: ${AttachPostES6.highlighted}`
+      );
+
+      AttachPostES6.edit("Текст теперь подсвечен");
+      AttachPostES6.makeTextHighlighted();
+      console.log(
+        `Имя: ${AttachPostES6.person}, сообщение: '${AttachPostES6.text}',
+  время: ${AttachPostES6.timeStamp}, подсветка: ${AttachPostES6.highlighted}`
+      );
+
+      // Просмотр дерева прототипов обектов
+      console.log(firstPostES6);
+      console.log(AttachPostES6);
+    </script>
+  </body>
+</html>
