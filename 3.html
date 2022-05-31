@@ -1,70 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Homework</title>
-</head>
-<body>
-<!--
+  <head>
+    <meta charset="UTF-8" />
+    <title>Homework 5.3</title>
+  </head>
+  <body>
+    <!--
 Обязательное задание.
 
 Выполнить все задачи в теге script. Комментарии, в которых написаны задачи, не
 стирать, код с решением задачи пишем под комментарием.
 -->
 
-<p class="super_element">Привет</p>
+    <p class="super_element">Привет</p>
 
-<img src="https://placeimg.com/50/50/animals" alt="">
-<img src="https://placeimg.com/50/50/arch" alt="">
-<img src="https://placeimg.com/50/50/nature" alt="">
-<img src="https://placeimg.com/50/50/people" alt="">
-<img src="https://placeimg.com/50/50/tech" alt="">
-<img src="https://placeimg.com/50/50/tech/grayscale" alt="">
-<img src="https://placeimg.com/50/50/tech/sepia" alt="">
+    <img src="https://placeimg.com/50/50/animals" alt="" />
+    <img src="https://placeimg.com/50/50/arch" alt="" />
+    <img src="https://placeimg.com/50/50/nature" alt="" />
+    <img src="https://placeimg.com/50/50/people" alt="" />
+    <img src="https://placeimg.com/50/50/tech" alt="" />
+    <img src="https://placeimg.com/50/50/tech/grayscale" alt="" />
+    <img src="https://placeimg.com/50/50/tech/sepia" alt="" />
 
-<br>
+    <br />
 
-<button>Кнопка</button>
-<button class="super_element">Кнопка с классом btn</button>
-<button>Кнопка</button>
+    <button>Кнопка</button>
+    <button class="super_element">Кнопка с классом btn</button>
+    <button>Кнопка</button>
 
-<br>
+    <br />
 
-<textarea></textarea>
+    <textarea></textarea>
 
-<br>
+    <br />
 
-<ul>
-  <li>
-    <button>Кнопка 1</button>
-  </li>
-  <li>
-    <button>Кнопка 2</button>
-  </li>
-  <li>
-    <button>Кнопка 3</button>
-  </li>
-  <li>
-    <button>Кнопка 4</button>
-  </li>
-</ul>
+    <ul>
+      <li>
+        <button>Кнопка 1</button>
+      </li>
+      <li>
+        <button>Кнопка 2</button>
+      </li>
+      <li>
+        <button>Кнопка 3</button>
+      </li>
+      <li>
+        <button>Кнопка 4</button>
+      </li>
+    </ul>
 
-<script>
-  "use strict";
+    <script>
+      "use strict";
 
-  /*
+      /*
   1. Необходимо вывести сообщение в консоль "все теги прогрузились", когда все
   теги будут созданы браузером.
   */
-
-
-  /*
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("все теги прогрузились");
+      });
+      /*
   2. Необходимо вывести сообщение в консоль "страница загрузилась", когда все
   ресурсы страницы будут загружены.
   */
-
-
-  /*
+      document.addEventListener("Load", function () {
+        console.log("страница загрузилась");
+      });
+      // без принудительной задержки выходила ошибка связанная с "cookie"
+      // и в консоль ничего не выводилось. В моем браузере "cookie" разрешены.
+      for (var i = 0; i < 1000000000; i++) {}
+      /*
   3. При клике на какой-либо тег на странице в консоль должно выводиться
   сообщение наподобие:
   Класс "super_element" присутствует в элементе "div".
@@ -73,34 +78,56 @@
   которому был совершен клик.
   Необходимо использовать делегирование.
   */
-
-
-  /*
+      // Делегирование события клика текущего элемента страницы
+      // "повешано" на родителя "document"
+      document.addEventListener("click", function (event) {
+        const containStr = event.target.classList.contains("super_element")
+          ? "присутствует"
+          : "отсутствует";
+        console.log(
+          `Класс "super_element" ${containStr} 
+          в элементе "${event.target.tagName.toLowerCase()}".`
+        );
+      });
+      /*
   4. Сделайте, чтобы при наведении на textarea в консоли появлялось сообщение:
   "Вы навели на textarea."
    */
-
-
-  /*
+      const eventMous = document.querySelector("textarea");
+      eventMous.addEventListener("mouseover", function () {
+        console.log("Вы навели на textarea.");
+      });
+      /*
   5. Необходимо повесить событие клика на тег ul. В обработчике события в
   консоль необходимо выводить текст, который записан внутри элемента кнопки,
   по которой был произведен клик.
   Если клик был не по кнопке, то ничего выводить не нужно.
   Необходимо использовать делегирование.
    */
-
-
+      // Делегирование события клика кнопки "повешано" на родителя "ul"
+      document.querySelector("ul").addEventListener("click", function (event) {
+        if (event.target.tagName === "BUTTON") {
+          console.log(event.target.textContent);
+        }
+      });
+      /*
   /*
   6. Вопрос: Почему в console.log пишется сначала текст из 5 задания и только
   потом выводится текст из 3 задания, если мы кликаем по кнопкам в ul?
   Ответ необходимо написать здесь же, под этим комментарием, своими словами.
+
+  В задании "5" отработка события "клик" повешано на элемент "ul"
+  В задании "3" отработка события "клик" повешано на элемент "document".
+  Элемент "ul" находится внутри  "document". Значит, когда на элементе "ul" 
+  происходит событие, обработчики сначала срабатывают на нём, 
+  потом на его родителе, затем выше и так далее, вверх по цепочке предков.
   */
 
-
-  /*
+      /*
   7. С помощью JS необходимо изменить цвет заднего фона каждого второго тега li.
    */
-
-</script>
-</body>
+      const replBGcolor = document.querySelectorAll("li:nth-child(even)");
+      replBGcolor.forEach((element) => (element.style.backgroundColor = "red"));
+    </script>
+  </body>
 </html>
