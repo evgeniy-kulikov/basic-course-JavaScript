@@ -56,19 +56,19 @@
   1. Необходимо вывести сообщение в консоль "все теги прогрузились", когда все
   теги будут созданы браузером.
   */
-      document.addEventListener("DOMContentLoaded", function () {
-        console.log("все теги прогрузились");
-      });
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log("все теги прогрузились");
+  });
       /*
   2. Необходимо вывести сообщение в консоль "страница загрузилась", когда все
   ресурсы страницы будут загружены.
   */
-      document.addEventListener("Load", function () {
-        console.log("страница загрузилась");
-      });
-      // без принудительной задержки выходила ошибка связанная с "cookie"
-      // и в консоль ничего не выводилось. В моем браузере "cookie" разрешены.
-      for (var i = 0; i < 1000000000; i++) {}
+  document.addEventListener("Load", function () {
+    console.log("страница загрузилась");
+  });
+  // без принудительной задержки выходила ошибка связанная с "cookie"
+  // и в консоль ничего не выводилось. В моем браузере "cookie" разрешены.
+  for (var i = 0; i < 1000000000; i++) {}
       /*
   3. При клике на какой-либо тег на странице в консоль должно выводиться
   сообщение наподобие:
@@ -80,23 +80,23 @@
   */
       // Делегирование события клика текущего элемента страницы
       // "повешано" на родителя "document"
-      document.addEventListener("click", function (event) {
-        const containStr = event.target.classList.contains("super_element")
-          ? "присутствует"
-          : "отсутствует";
-        console.log(
-          `Класс "super_element" ${containStr} 
-          в элементе "${event.target.tagName.toLowerCase()}".`
-        );
-      });
+  document.addEventListener("click", function (event) {
+    const containStr = event.target.classList.contains("super_element")
+      ? "присутствует"
+      : "отсутствует";
+    console.log(
+      `Класс "super_element" ${containStr} 
+      в элементе "${event.target.tagName.toLowerCase()}".`
+    );
+  });
       /*
   4. Сделайте, чтобы при наведении на textarea в консоли появлялось сообщение:
   "Вы навели на textarea."
    */
-      const eventMous = document.querySelector("textarea");
-      eventMous.addEventListener("mouseover", function () {
-        console.log("Вы навели на textarea.");
-      });
+  const eventMous = document.querySelector("textarea");
+  eventMous.addEventListener("mouseover", function () {
+    console.log("Вы навели на textarea.");
+  });
       /*
   5. Необходимо повесить событие клика на тег ul. В обработчике события в
   консоль необходимо выводить текст, который записан внутри элемента кнопки,
@@ -104,12 +104,12 @@
   Если клик был не по кнопке, то ничего выводить не нужно.
   Необходимо использовать делегирование.
    */
-      // Делегирование события клика кнопки "повешано" на родителя "ul"
-      document.querySelector("ul").addEventListener("click", function (event) {
-        if (event.target.tagName === "BUTTON") {
-          console.log(event.target.textContent);
-        }
-      });
+  // Делегирование события клика кнопки "повешано" на родителя "ul"
+  document.querySelector("ul").addEventListener("click", function (event) {
+    if (event.target.tagName === "BUTTON") {
+      console.log(event.target.textContent);
+    }
+  });
       /*
   /*
   6. Вопрос: Почему в console.log пишется сначала текст из 5 задания и только
@@ -126,8 +126,8 @@
       /*
   7. С помощью JS необходимо изменить цвет заднего фона каждого второго тега li.
    */
-      const replBGcolor = document.querySelectorAll("li:nth-child(even)");
-      replBGcolor.forEach((element) => (element.style.backgroundColor = "red"));
+  const replBGcolor = document.querySelectorAll("li:nth-child(even)");
+  replBGcolor.forEach((element) => (element.style.backgroundColor = "red"));
     </script>
   </body>
 </html>
